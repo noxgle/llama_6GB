@@ -125,7 +125,7 @@ main() {
   declare -A LXC_ENV_VARS
   LXC_ENV_VARS["PROJECT_DIR"]="$PROJECT_DIR"
   LXC_ENV_VARS["APP_PORT"]="${APP_PORT:-8089}"
-  LXC_ENV_VARS["REPO_URL"]="${REPO_URL:-https://github.com/noxgle/llama.git}"
+  LXC_ENV_VARS["REPO_URL"]="${REPO_URL:-https://github.com/noxgle/llama_6GB.git}"
   LXC_ENV_VARS["REPO_BRANCH"]="${REPO_BRANCH:-master}"
   LXC_ENV_VARS["ACTIVE_CONFIG"]="${ACTIVE_CONFIG:-configs/qwen3.6-35ba3b-mtp-unsloth.env}"
   LXC_ENV_VARS["LLAMA_REPO"]="${LLAMA_REPO:-https://github.com/ggml-org/llama.cpp.git}"

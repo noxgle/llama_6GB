@@ -14,7 +14,7 @@ echo "=== [STEP $STEP_NAME] Deploy llama.cpp ==="
 
 # Defaults (if not provided via env)
 : "${PROJECT_DIR:=/opt/llama}"
-: "${REPO_URL:=https://github.com/noxgle/llama.git}"
+: "${REPO_URL:=https://github.com/noxgle/llama_6GB.git}"
 : "${REPO_BRANCH:=master}"
 : "${ACTIVE_CONFIG:=configs/qwen3.6-35ba3b-mtp-unsloth.env}"
 : "${APP_PORT:=8089}"

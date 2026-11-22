@@ -25,7 +25,7 @@
 #   1. Installs Docker Engine (official repo)
 #   2. Installs nvidia-container-toolkit for GPU access in containers
 #   3. Verifies GPU is accessible inside Docker — ABORTS if not
-#   4. Clones noxgle/llama repo to /opt/llama (or pulls latest)
+#   4. Clones noxgle/llama_6GB repo to /opt/llama (or pulls latest)
 #   5. Creates HF cache volume + models/ directory
 #   6. Builds llama-server image locally from Dockerfile
 #   7. Checks available disk space (warns if < 25 GB, 35 GB for Q5)
@@ -37,7 +37,7 @@
 # To switch:     cp configs/<name>.env .env && docker compose up -d
 #
 # Environment variables:
-#   LLAMA_REPO   Git repo URL (default: https://github.com/noxgle/llama.git)
+#   LLAMA_REPO   Git repo URL (default: https://github.com/noxgle/llama_6GB.git)
 #   LLAMA_REF    Git ref to build (default: master)
 #   LLAMA_DIR    Install directory (default: /opt/llama)
 #   BUILD_JOBS   Parallel build jobs (default: 6)
@@ -76,7 +76,7 @@ EOF
 done
 
 # Overridable via environment
-REPO_URL="${LLAMA_REPO:-https://github.com/noxgle/llama.git}"
+REPO_URL="${LLAMA_REPO:-https://github.com/noxgle/llama_6GB.git}"
 LLAMA_REF="${LLAMA_REF:-master}"
 INSTALL_DIR="${LLAMA_DIR:-/opt/llama}"
 BUILD_JOBS="${BUILD_JOBS:-6}"

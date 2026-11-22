@@ -5,7 +5,7 @@
 # Usage:
 #   bash deploy/install-llama.sh qwen          # from repo checkout
 #   bash deploy/install-llama.sh qwen-q5       # Q5_K_M variant
-#   bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/master/deploy/install-llama.sh) qwen
+#   bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/master/deploy/install-llama.sh) qwen
 #
 # Prerequisites:
 #   - Debian 12+ or Ubuntu 22.04+ (fresh install recommended)
@@ -17,7 +17,7 @@
 #   1. Installs Docker Engine (official repo)
 #   2. Installs nvidia-container-toolkit for GPU access in containers
 #   3. Verifies GPU is accessible inside Docker — ABORTS if not
-#   4. Clones noxgle/llama repo to /opt/llama
+#   4. Clones noxgle/llama_6GB repo to /opt/llama
 #   5. Creates HF cache volume + models/ directory
 #   6. Pulls llama-server image from GitHub Container Registry
 #   7. Checks available disk space (warns if < 25 GB)
@@ -29,7 +29,7 @@
 # To switch:     cp configs/<name>.env .env && docker compose up -d
 #
 # Environment variables:
-#   LLAMA_REPO   Git repo URL (default: https://github.com/noxgle/llama.git)
+#   LLAMA_REPO   Git repo URL (default: https://github.com/noxgle/llama_6GB.git)
 #   LLAMA_DIR    Install directory (default: /opt/llama)
 #   LLAMA_IMAGE  Docker image (default: ghcr.io/noxgle/llama-server:b10665)
 
@@ -53,7 +53,7 @@ case "${2:-}" in
 esac
 
 # Overridable via environment
-REPO_URL="${LLAMA_REPO:-https://github.com/noxgle/llama.git}"
+REPO_URL="${LLAMA_REPO:-https://github.com/noxgle/llama_6GB.git}"
 INSTALL_DIR="${LLAMA_DIR:-/opt/llama}"
 LLAMA_IMAGE="${LLAMA_IMAGE:-ghcr.io/noxgle/llama-server:b10665}"
 

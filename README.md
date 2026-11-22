@@ -79,13 +79,13 @@ Host pre-requisites: NVIDIA drivers, GPU passthrough (for Proxmox LXC), kernel m
 
 ```bash
 # Qwen3.6 (production default, ~33 tok/s)
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/master/deploy/install-llama.sh) qwen
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/master/deploy/install-llama.sh) qwen
 
 # Gemma4 26B (alternative, ~27 tok/s)
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/master/deploy/install-llama.sh) gemma4
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/master/deploy/install-llama.sh) gemma4
 
 # Qwen3.6 Q5_K_M (higher quality, ~30 tok/s, needs ≥35 GB free)
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/master/deploy/install-llama.sh) qwen-q5
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/master/deploy/install-llama.sh) qwen-q5
 ```
 
 The script installs Docker, `nvidia-container-toolkit`, pulls the server image, downloads model weights, and starts the server on **port 8089** with `restart: unless-stopped`.
@@ -99,7 +99,7 @@ By default, `install-llama.sh` pulls a pre-built CI image with `GGML_NATIVE=OFF`
 For maximum throughput, build directly on the target machine:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/master/deploy/install-llama.sh) qwen --build-local
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/master/deploy/install-llama.sh) qwen --build-local
 ```
 
 This sets `GGML_NATIVE=ON`, enabling `-march=native` optimization for the host CPU. Measured **+18% tok/s** on Ryzen 5600X (33.9 vs 28.6 tok/s in short-gen benchmarks). Build takes ~36 min — one-time cost per machine.
@@ -111,13 +111,13 @@ Pin to a specific release tag instead of `master`:
 ```bash
 # Current stable (stable-b10665-v1)
 
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/stable-b10665-v1/deploy/install-llama.sh) qwen
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/stable-b10665-v1/deploy/install-llama.sh) gemma4
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/stable-b10665-v1/deploy/install-llama.sh) qwen-q5
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/stable-b10665-v1/deploy/install-llama.sh) qwen
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/stable-b10665-v1/deploy/install-llama.sh) gemma4
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/stable-b10665-v1/deploy/install-llama.sh) qwen-q5
 # Previous stable (stable-b10068-v1, rollback)
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/stable-b10068-v1/deploy/install-llama.sh) qwen
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/stable-b10068-v1/deploy/install-llama.sh) gemma4
-bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama/stable-b10068-v1/deploy/install-llama.sh) qwen-q5
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/stable-b10068-v1/deploy/install-llama.sh) qwen
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/stable-b10068-v1/deploy/install-llama.sh) gemma4
+bash <(curl -fsSL https://raw.githubusercontent.com/noxgle/llama_6GB/stable-b10068-v1/deploy/install-llama.sh) qwen-q5
 ```
 
 > **Vision rollback:** b10665 is approved for Qwen text/Q5 workloads. Gemma 4 E2B vision remains on `b10068` because b10665 generated 97.8 tok/s versus the 114.3 tok/s b10068 control.
