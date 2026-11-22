@@ -45,7 +45,7 @@ Przetestować najnowszy llama.cpp (master HEAD `885c5bbe8` = release **b10428**,
 - **llama.cpp:** `ggml-org/llama.cpp`, pin SHA `885c5bbe8` (b10428)
 - **Obraz:** `ghcr.io/noxgle/llama-server:b10428` (budowany lokalnie na .38)
 - **Hosting:** Docker Compose (`docker-compose.yml`, GPU przez `deploy.resources.reservations.devices`)
-- **Dev/benchmark:** `llama.sh` (override `LLAMA_IMAGE=...:b10428`), `scripts/benchmark-guarded-remote.sh`, `scripts/benchmark-vision.sh`, `scripts/benchmark-draft-mtp.sh`
+- **Dev/benchmark:** `llama.sh` (override `LLAMA_IMAGE=...:b10428`), `benchmark/benchmark-guarded-remote.sh`, `benchmark/benchmark-vision.sh`, `benchmark/benchmark-draft-mtp.sh`
 - **Konfigi:** `configs/qwen3.6-35ba3b-mtp-unsloth.env`, `configs/gemma4-e2b-q4-k-m-mtp.env`
 - **Sync:** `sync.sh push/deploy/health/status`
 
@@ -153,7 +153,7 @@ Baseline'y b10068 do porównania (udokumentowane w AGENTS.md):
     - Serwer odpowiada na chat completions z sensownym `predicted_per_second` (≥25 tok/s)
     - W logach brak CPU fallback; ew. `graphs reused = N` widoczne
   - **Verification:**
-    - `HOST=root@192.168.200.38 PROJECT_DIR=/opt/llama bash scripts/benchmark-guarded-remote.sh` (fail = CPU fallback)
+    - `HOST=root@192.168.200.38 PROJECT_DIR=/opt/llama bash benchmark/benchmark-guarded-remote.sh` (fail = CPU fallback)
     - `ssh root@192.168.200.38 'curl -s http://localhost:8089/v1/chat/completions ...' | jq '.timings.predicted_per_second'`
 
 ### Phase 2: Bramki tekstowe (Qwen3.6 Q4_K_M)
@@ -169,7 +169,7 @@ Baseline'y b10068 do porównania (udokumentowane w AGENTS.md):
 **Confidence:** High
 
 - [x] **Task:** Knowledge benchmark na b10428
-  - **Description:** Uruchomić knowledge suite (skrypt jak w runach b10068 — `scripts/benchmark-knowledge.sh` na .38) z Qwen3.6 Q4_K_M na obrazie b10428; zapisać JSON/TXT w repo (konwencja `benchmark-kb-<ts>.json`).
+  - **Description:** Uruchomić knowledge suite (skrypt jak w runach b10068 — `benchmark/benchmark-knowledge.sh` na .38) z Qwen3.6 Q4_K_M na obrazie b10428; zapisać JSON/TXT w repo (konwencja `benchmark-kb-<ts>.json`).
   - **Files:** `benchmark-kb-<ts>.{json,txt}` (nowe pliki wyników w repo)
   - **Dependencies:** Phase 1
   - **Acceptance Criteria:**
@@ -200,7 +200,7 @@ Baseline'y b10068 do porównania (udokumentowane w AGENTS.md):
 **Confidence:** Medium
 
 - [x] **Task:** Sweep `SPEC_DRAFT_N_MAX` 0/1/2/3
-  - **Description:** `scripts/benchmark-draft-mtp.sh` na .38 z obrazem b10428 (skrypt używa `--runtime=nvidia`); zmieniać `SPEC_DRAFT_N_MAX` w configu/.env i mierzyć tok/s + acceptance rate.
+  - **Description:** `benchmark/benchmark-draft-mtp.sh` na .38 z obrazem b10428 (skrypt używa `--runtime=nvidia`); zmieniać `SPEC_DRAFT_N_MAX` w configu/.env i mierzyć tok/s + acceptance rate.
   - **Files:** pliki wynikowe benchmarku, `.env` na .38
   - **Dependencies:** Phase 2
   - **Acceptance Criteria:**
@@ -222,7 +222,7 @@ Baseline'y b10068 do porównania (udokumentowane w AGENTS.md):
 **Confidence:** Medium
 
 - [x] **Task:** Vision benchmark E2B na b10428
-  - **Description:** Przełączyć .38 na config `gemma4-e2b-q4-k-m-mtp.env` z obrazem b10428 (`docker compose down && up -d` po zmianie `.env` — restart NIE czyta .env), uruchomić `python3 scripts/benchmark-vision.sh` (HOST=root@192.168.200.38, PORT=8089), zapisać wyniki.
+  - **Description:** Przełączyć .38 na config `gemma4-e2b-q4-k-m-mtp.env` z obrazem b10428 (`docker compose down && up -d` po zmianie `.env` — restart NIE czyta .env), uruchomić `python3 benchmark/benchmark-vision.sh` (HOST=root@192.168.200.38, PORT=8089), zapisać wyniki.
   - **Files:** `benchmark-vision-<ts>.{txt,json}` (nowe pliki wyników)
   - **Dependencies:** Phase 1
   - **Acceptance Criteria:**
@@ -269,7 +269,7 @@ Baseline'y b10068 do porównania (udokumentowane w AGENTS.md):
   - **Acceptance Criteria:**
     - Na każdym serwerze: guarded health OK (HTTP 200, VRAM > 0), throughput w baseline (Qwen ~33, Gemma4 ~27, Q5 ~30 tok/s ±5%)
   - **Verification:**
-    - `HOST=root@192.168.200.X PROJECT_DIR=/opt/llama bash scripts/benchmark-guarded-remote.sh` dla każdego X
+    - `HOST=root@192.168.200.X PROJECT_DIR=/opt/llama bash benchmark/benchmark-guarded-remote.sh` dla każdego X
     - `./sync.sh status` / `./sync.sh health`
 
 - [x] **Task (jeśli FAIL):** Zostań na b10068 + dokumentacja

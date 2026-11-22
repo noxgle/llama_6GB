@@ -390,7 +390,7 @@ Key findings:
 - Generation speed is memory-bandwidth-bound, unaffected by batch size
 - Numbers above are from CI builds (`GGML_NATIVE=OFF`). Local builds with `--build-local` (`GGML_NATIVE=ON`) achieve **~33.9 tok/s** (+18%) on the same hardware.
 
-> **Full benchmark data:** `scripts/benchmark-batch.sh`, `scripts/benchmark-knowledge.sh`, and `scripts/benchmark-knowledge-compare.md`.
+> **Full benchmark data:** `benchmark/benchmark-batch.sh`, `benchmark/benchmark-knowledge.sh`, and `benchmark/benchmark-knowledge-compare.md`.
 
 ---
 

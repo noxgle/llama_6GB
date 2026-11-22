@@ -96,7 +96,7 @@ b10428 (master @ `885c5bbe8`, 215 commits after b10213, incl. #26802 CUDA graphs
 - **Slot save/restore is SLOWER than RAM prompt cache** on this setup: restore from 100 MB disk file + reprocess ≈ 5.0–5.3 s prefill vs 1.1 s with `cache_prompt=true` + `--cache-ram 4096`. Feature works but is not beneficial here.
 
 ### docker run on Docker 26 — use `--runtime=nvidia`, NOT `--gpus all`
-`llama.sh` and `scripts/benchmark-draft-mtp.sh` now use `--runtime=nvidia` (+ `NVIDIA_VISIBLE_DEVICES=all`) — `--gpus all` alone doesn't mount `libcuda.so.1` and triggers the post-reboot CPU-JIT gotcha. `llama.sh` defaults to `:stable-b12167-v1`; override per invocation (`LLAMA_IMAGE=... ./llama.sh start qwen`, prod `.19` pins `:b12167-native` via the systemd drop-in). `:latest` prints a warning (untested master).
+`llama.sh` and `benchmark/benchmark-draft-mtp.sh` now use `--runtime=nvidia` (+ `NVIDIA_VISIBLE_DEVICES=all`) — `--gpus all` alone doesn't mount `libcuda.so.1` and triggers the post-reboot CPU-JIT gotcha. `llama.sh` defaults to `:stable-b12167-v1`; override per invocation (`LLAMA_IMAGE=... ./llama.sh start qwen`, prod `.19` pins `:b12167-native` via the systemd drop-in). `:latest` prints a warning (untested master).
 
 ### Batch tuning (RTX A2000 6 GB)
 `UBATCH` must ≈ `BATCH` (1024/256 was −39%). Optimal: **BATCH=3072, UBATCH=1536** (+88% prefill, −35% total time, ~86% VRAM). 4096/2048 works at 93% VRAM but 5120/2560 OOMs. Generation speed (~25 tok/s) is memory-bandwidth-bound, unaffected by batch size.
@@ -113,7 +113,7 @@ ssh root@192.168.200.38 'curl -s http://localhost:8089/v1/chat/completions \
   | jq '.timings.predicted_per_second'
 
 # Guarded benchmark (fails on CPU fallback)
-HOST=root@192.168.200.38 PROJECT_DIR=/opt/llama bash scripts/benchmark-guarded-remote.sh
+HOST=root@192.168.200.38 PROJECT_DIR=/opt/llama bash benchmark/benchmark-guarded-remote.sh
 
 # Guarded health
 curl -s http://192.168.200.38:8089/health

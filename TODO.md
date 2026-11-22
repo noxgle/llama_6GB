@@ -85,7 +85,7 @@ Unsloth Gemma4 QAT, TurboQuant fork.
 
 ## Phase 4: SoA prefill test
 - [ ] Porównać prefill tok/s na Qwen3.6 Q4_K_M przed/po update
-- [ ] Benchmark z długim promptem (~10k toków): `scripts/benchmark-batch.sh`
+- [ ] Benchmark z długim promptem (~10k toków): `benchmark/benchmark-batch.sh`
 - [ ] Jeśli SoA wspiera tylko dense modele — ew. test z Qwen3-8B Q4_K_M (opcjonalnie)
 
 ## Phase 5: Nowe modele (opcjonalnie)
